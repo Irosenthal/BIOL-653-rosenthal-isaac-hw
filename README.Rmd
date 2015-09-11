@@ -4,24 +4,7 @@ author: "Isaac Rosenthal"
 date: "September 11, 2015"
 output: html_document
 ---
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-To create this README I made an Rmarkdown file in  RStudio.
+This is my README.
 
 ####Markdown Formats
 To make that heading, I put #### in front of my text. The text size can be changed by increasing or decreasing the number of #s.
@@ -33,13 +16,13 @@ In order to save this README, I saved it into a directory on my computer located
 We will be using GIT to track our changes. Initially, I tracked them on my local computer by using the following commands:
 
 1. cd documents/'R projects'/'practical computing/homework
-..*this gets me into the correct working directory
+  *this gets me into the correct working directory
 2. git status
-..* this shows what branch I'm on and what files are there.
+  * this shows what branch I'm on and what files are there.
 3. git add README.Rmd
-..* This adds the file to the staging area
+  * This adds the file to the staging area
 4. git commit -m 'preliminary README'
-..* THis commits the file with a message to future me
+  * THis commits the file with a message to future me
 
 I then made a repository on the github website used the following command to initiate it
 >git remote add origin https://github.com/Isaac-Rosenthal/Intro-to-practical-computing.git
