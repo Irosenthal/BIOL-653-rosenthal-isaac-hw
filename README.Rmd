@@ -11,6 +11,8 @@ To make that heading, I put #### in front of my text. The text size can be chang
 
 The text can be made *italic* or **bold** by placing surrounding text with single or double *, respectively. Additonally, _ may be used instead of *, allowing more elaborate formatting.
 
+####Workflow
+
 In order to save this README, I saved it into a directory on my computer located at C:\Users\Rosen_000\Documents\R projects\Practical computing\homework
 
 We will be using GIT to track our changes. Initially, I tracked them on my local computer by using the following commands:
@@ -22,7 +24,7 @@ We will be using GIT to track our changes. Initially, I tracked them on my local
 3. git add README.Rmd
   * This adds the file to the staging area
 4. git commit -m 'preliminary README'
-  * THis commits the file with a message to future me
+  * This commits the file with a message to future me
 
 I then made a repository on the github website used the following command to initiate it
 >git remote add origin https://github.com/Isaac-Rosenthal/Intro-to-practical-computing.git
