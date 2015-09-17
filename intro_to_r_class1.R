@@ -37,3 +37,93 @@ exp(0.5) # e^(1/2)
 # function(arg1, arg2, arg3)
 mean(x, trim = 0, na.rm = FALSE)  # x is list of values, trim trims outliers, 0 is default,don't NEED to write it but helps remember, na.rm means do you want me to remove NAs (no data) before calculating mean?
 
+#-----------------------------------------------------
+####Let's meet gapminder!####
+
+install.packages('gapminder') #just installs it, don't have to do again
+
+library(gapminder) #doesn't necessarily give a message, if it doesn't throw an error it worked
+
+gapminder
+str()  # shows structure of data or object
+str(gapminder) # 1704 rows, 6 variables
+
+head(gapminder) # prints 1st 6 rows
+tail(gapminder) # prints last 6 rows
+View(gapminder) # makes a table
+dim(gapminder) # gives rows and columns of dataset
+
+#Let's look at a single vector
+#you can index columns of a data.frame using $
+gapminder$lifeExp
+life <- gapminder$lifeExp # assigns it, makes it easier to use
+head(life)
+length(life)
+dim(life) # returns NULL because it is not a dataframe
+str(life)
+is.data.frame(life) # see? not a data.frame
+is.vector(life) # it is now a vector!
+
+####Indexing####
+
+life[1] # prints 1st value
+life[2] # prints 2nd value
+life[3] # etc 
+head(life) # check, they match up
+
+life[1:2] # this displays a particular range of data
+life[1:10]
+life[1694:1704]
+
+life[c(1, 2)] # lets you buiuld a vector with partular values
+life[c(1, 2, 3, 100, 700)]
+
+####Back to gapfinder data.frame####
+gapminder[1, 1]
+names(gapminder) # shows column names
+gapminder[1, 'country'] # you can call out columns by name, not just number, makes it easer to read when going back over code
+gapminder[1, c('country', 'year')] # shows matrix of 1st value of 1st 2 columns
+gapminder[1, ] #if you don't specify columns, it prints all
+gapminder[1:10, ]
+gapminder[, c('country', 'year')]
+
+####Excercises####
+
+#1
+gapminder[100, ]
+
+#2
+gapminder[40:50, c('country', 'continent', 'lifeExp')]
+
+#3
+life[c(1:2, 10, (1704 - 5):1704)] # prints 1st, 2nd, 10th, and last 6 values of life
+life[c(1:2, 10, (length(life)-5):length(life))] # same thing
+life[c(1:2, 10, (1704 - 5):1704)] == life[c(1:2, 10, (length(life)-5):length(life))] #check if they are the same
+
+####intro to ggplot####
+
+plot(gapminder$pop ~ gapminder$year) # plots pop by year
+
+# ggplot comes from grammar of graphics
+# data must be as data.frame 
+# tidy data - every variable has it's own discrete column, nothing dependant on another column
+# aesthetic (aes):  tells ggplot where to put points and lines - mapping variables to visual properties-position, colour, line type, size 
+# geoms: actual visialization of data, ie geombar, geomline, geomhistogram, etc
+# scale: map values, color, size, shape. shows up as legends and axis
+# stat: statistical transformations, summaries of data
+# facet: separates data into different panels
+
+install.packages('ggplot2')
+library(ggplot2)
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point() # use gapminder data, year on x, lifeexp on y, make a scatterplot
+
+#####adding some color!####
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) + geom_point() # add color to continent
+ #### layering ####
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line() # lines coded by country, color by continent
+
+p <- ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line() # saves this plot to variable p
+p + geom_point()
