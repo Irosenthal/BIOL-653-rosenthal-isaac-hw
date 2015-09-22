@@ -54,8 +54,8 @@ View(gapminder) # makes a table
 dim(gapminder) # gives rows and columns of dataset
 
 #Let's look at a single vector
-#you can index columns of a data.frame using $
-gapminder$lifeExp
+
+gapminder$lifeExp # you can index columns of a data.frame using $
 life <- gapminder$lifeExp # assigns it, makes it easier to use
 head(life)
 length(life)
@@ -125,5 +125,71 @@ ggplot(data = gapminder, aes(x = year, y = lifeExp, color = continent)) + geom_p
 
 ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line() # lines coded by country, color by continent
 
-p <- ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line() # saves this plot to variable p
+p <- ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) # saves this plot to variable p
 p + geom_point()
+
+# many layers are built in (defaults)
+# color modifies layers
+# titles are 
+
+p + geom_point(aes(color = continent)) # add color a different way
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) +
+    geom_point()+
+    geom_line()
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) + # this puts color in a different layer
+  geom_point()+
+  geom_line(aes(color = continent))
+
+ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) + # this changes the order of the layers, putting the points on top
+  geom_line(aes(color = continent)) + 
+  geom_point()
+  
+
+#### Scales ####
+# axis and legends
+# modifying scales
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, by = country, color = log(gdpPercap)))+ 
+    geom_point()
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, by = country, color = continent))+ 
+  geom_point()    
+
+#### dev ####
+dev.new() # make a new window to plot something else
+dev.list() # lists all windows
+dev.set(4) # sets a new active window
+dev.cur() # prints active window
+
+#### scales again ####
+# keep track of what your data is (num, factor, etc)
+
+# in class excercise
+ggplot(data = gapminder, aes (x = year, y = lifeExp, by = country, 
+                              color = log(gdpPercap))) + 
+  geom_point()+ 
+  scale_color_gradientn(colours = topo.colors(10))
+
+
+
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + # facets allow multiple panels per plot
+    geom_point() +
+    facet_wrap(~ continent)
+             
+ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + # jitter spreads data out
+    geom_jitter()
+
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + # alpha addjusts point transparency
+    geom_point(alpha = 0.3)
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + # geom_text labels points
+    geom_point() +
+    geom_text(aes(label = year))
+
+ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + 
+    geom_point() +
+    geom_text(aes(label = country))
