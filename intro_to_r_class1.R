@@ -193,3 +193,73 @@ ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + 
 ggplot(data = gapminder, aes (x = year, y = lifeExp, color = log(gdpPercap))) + 
     geom_point() +
     geom_text(aes(label = country))
+
+
+
+#### dplyr ####
+
+
+# split-apply-combine
+
+# load todays libraries
+
+library(dplyr)
+library(gapminder)
+library(ggplot2)
+
+# filter and select
+filter(gapminder, country == 'Canada')
+
+# Doesn't work because there is no column b the name of Canada
+select(gapminder, Canada)
+
+(gapminder[, 'country'])
+select(gapminder, country) # selects columns by name
+
+head(select(gapminder, starts_with('C')))
+
+#### pipe ####
+group_by(gapminder, continent) %>%
+    summarise(mean_life = mean(lifeExp))    # collapses data
+
+# calculate GDP
+
+head(mutate(gapminder, gdp = gdpPercap * pop))    # does something to every row of data, eg add 1. makes new column and shows all original
+    
+head(transmute(gapminder, gdp = gdpPercap * pop))    #   makes new column, only shows new one
+
+head(arrange(gapminder, lifeExp))
+
+head(arrange(gapminder, desc(lifeExp))) # switches to descending
+
+tbl_df(gapminder)
+gapminder <- tbl_df(gapminder) # changes class of gapminder, gives it a different view. will only print 10 rows by default
+
+##### in class excersizes ####
+
+#1
+#For each continent, which country had the smallest population in 1952, 1972, and 2002?
+filter(gapminder, year == 1952 | year == 1972 | year == 2002) %>%
+    g
+
+flter(gapminder, year == c(1952, 1972, 2002)) %>% # this one is dangerous
+    arrange(desc(year))
+
+filter(gapminder, year %in% c(1952, 1972, 2002))
+
+# 2
+ggplot(data = gapminder, aes(x = year, y = pop, by = country, color = continent)) + geom_line()
+
+
+#3 mean gdpPercap
+gapminder %>%
+    group_by(country) %>%
+    summarise(mean(gdpPercap))
+
+    
+#4 mean gdp
+gapminder %>%
+    mutate(gdp = gdpPercap * pop) %>%
+    group_by(country) %>%
+    summarise(mean(gdp))
+   
