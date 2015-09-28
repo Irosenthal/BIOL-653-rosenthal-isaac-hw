@@ -1,0 +1,98 @@
+
+
+
+
+library(ggplot2)
+library(gapminder)
+library(dplyr)
+
+# 1
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
+  geom_point(aes(color = continent, shape = continent, size = continent)) +
+  scale_shape_manual(values=c(19,17,15,3,7)) +
+  scale_size_manual(values=c(3,3,3,3,3,3)) +
+  theme(text = element_text(size = 15))
+  
+# 2
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
+  geom_point(aes(color = continent, shape = continent, size = continent)) +
+  scale_shape_manual(values=c(19,17,15,3,7)) +
+  scale_size_manual(values=c(3,3,3,3,3,3)) +
+  theme(text = element_text(size = 15)) +
+  scale_x_log10()
+  
+  
+# 3
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
+  geom_point(aes(color = continent, shape = continent, size = continent)) +
+  scale_shape_manual(values=c(19,17,15,3,7)) +
+  scale_size_manual(values=c(3,3,3,3,3,3)) +
+  theme(text = element_text(size = 18)) +
+  scale_x_log10() +
+  geom_smooth(method = lm, aes(group = 1))
+  
+  
+# 4 
+# how do you make lines look smoother?
+
+ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
+      geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
+      theme(text = element_text(size = 15)) +
+      facet_wrap(~ year)
+      
+# 5
+ggplot(data = gapminder, aes(x = continent, y = lifeExp)) +
+      geom_boxplot(aes(color = continent)) +
+      theme(text = element_text(size = 15), axis.text.x=element_text(angle=-90)) +
+      facet_wrap(~ year)
+      
+# 6
+# was this as easy as it looked?
+ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
+      geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
+      theme(text = element_text(size = 15)) 
+      
+# 7 
+# how do you add a vertical line
+str(gapminder)
+
+filter(gapminder, continent == 'Asia') %>%
+ggplot(aes(x = lifeExp, fill = continent)) +
+      geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
+      scale_fill_manual(values = c('green')) +
+      theme(text = element_text(size = 15))
+     
+    
+# 8
+# how do you add vertical line
+
+mean_lifes <- group_by(gapminder, continent) %>%
+    summarise(mean_life = mean(lifeExp))
+    
+mean_lifes
+
+ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
+      geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
+      theme(text = element_text(size = 15)) +
+      facet_wrap(~ continent) +
+      geom_vline(data = mean_lifes, xinterecept = mean_life)
+      
+      
+# Find the mistakes
+
+library(ggplot2)
+
+hw_gapminder <- read.csv('C:/Users/Rosen_000/Downloads/hw_gapminder.csv')
+
+str(hw_gapminder)
+
+
+mean_lifeExp <- mean(hw_gapminder$lifeExp)  # removed extra 'e' at the end of ...$lifeExp
+
+small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), c('country', 'continent', 'year')]   # added c before('country....)
+
+mean_gdp <- mean(hw_gapminder,gdpPercap)
+
+max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp == max(hw_gapminder$lifeExp))]  # needed another "=""
+      
+ 
