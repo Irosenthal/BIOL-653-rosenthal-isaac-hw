@@ -235,7 +235,7 @@ head(arrange(gapminder, desc(lifeExp))) # switches to descending
 tbl_df(gapminder)
 gapminder <- tbl_df(gapminder) # changes class of gapminder, gives it a different view. will only print 10 rows by default
 
-##### in class excersizes ####
+##### in class excersizes ##### 
 
 #1
 #For each continent, which country had the smallest population in 1952, 1972, and 2002?
@@ -245,7 +245,21 @@ filter(gapminder, year == 1952 | year == 1972 | year == 2002) %>%
 flter(gapminder, year == c(1952, 1972, 2002)) %>% # this one is dangerous
     arrange(desc(year))
 
-filter(gapminder, year %in% c(1952, 1972, 2002))
+# here is the real answer
+# if you have a list of values you want to compare to, use %in%, not a bunch of = signs
+by continent
+subset 1952, 1972, 2002
+minimum population
+
+gapminder <- tbl_df(gapminder)
+
+gapminder %>%
+    filter(year %in% c(1952, 1972, 2002)) %>%
+    group_by(continent, year) %>%
+    slice(which.min(pop))
+%>%
+    select(country, year, pop)
+    
 
 # 2
 ggplot(data = gapminder, aes(x = year, y = pop, by = country, color = continent)) + geom_line()
@@ -263,3 +277,33 @@ gapminder %>%
     group_by(country) %>%
     summarise(mean(gdp))
    
+
+#  total population of each  continent over time
+
+total_pop_df <-
+    gapminder %>%
+    group_by(continent, year) %>%
+    summarize(total_pop = sum(pop))
+
+ggplot(data = total_pop_df, aes(x = year, y = total_pop, color = continent))+
+    geom_point()
+
+
+
+# 1) how many countries are there on each continent
+count countries in each continent, aka rows
+
+gapminder %>%
+    count(continent)
+
+
+# 2) what countries have the best and worst life expectancies in each continent
+
+gapminder %>%
+    select(country, continent, lifeExp) %>%
+    summarise(continent, country, max(lifeExp), min = min(lifeExp))
+
+
+# 3) which country experiences the sharpest 5 year drop in life expectancy
+# lead
+# lag
