@@ -98,7 +98,7 @@ ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
       
 #**Find the mistakes**
 
-load modified gapinder dataset
+load the modified gapinder dataset
 
 ```
 library(ggplot2)
