@@ -1,10 +1,16 @@
+
+#**Plots**
+
+Load Libraries
+
+```
 library(ggplot2)
 library(gapminder)
 library(dplyr)
+```
 
 
-
-# 1
+####**1) Plot 1**
 ```
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
   geom_point(aes(color = continent, shape = continent, size = continent)) +
@@ -13,7 +19,7 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) +
   theme(text = element_text(size = 15))
 ```
   
-# 2
+####**2) Plot 2**
 ```
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
   geom_point(aes(color = continent, shape = continent, size = continent)) +
@@ -23,7 +29,7 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) +
   scale_x_log10()
 ```  
   
-# 3
+####**3) Plot 3**
 ```
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) + 
   geom_point(aes(color = continent, shape = continent, size = continent)) +
@@ -34,7 +40,7 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, by = continent)) +
   geom_smooth(method = lm, aes(group = 1))
 ``` 
   
-# 4 
+####**4) Plot 4** 
 ```
 ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
       geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
@@ -42,21 +48,21 @@ ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
       facet_wrap(~ year)
 ```
 
-# 5
+####**5) Plot 5**
 ```
 ggplot(data = gapminder, aes(x = continent, y = lifeExp)) +
       geom_boxplot(aes(color = continent)) +
       theme(text = element_text(size = 15), axis.text.x = element_text(angle = -90)) +
       facet_wrap(~ year)
 ```      
-# 6
+####**6) Plot 6**
 ```
 ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
       geom_density(kernel = 'gaussian', aes(), alpha = .3, size = .75) +
       theme(text = element_text(size = 15)) 
 ```
 
-# 7
+####**7) Plot 7**
 ```
 str(gapminder)
 ```
@@ -70,9 +76,9 @@ ggplot(aes(x = lifeExp, fill = continent)) +
       theme(text = element_text(size = 15))
 ```     
     
-# 8
+####**8) Plot 8**
 
-FirstI made a new data frame with only continent and mean life expectancy
+First I made a new data frame with only continent and mean life expectancy
 
 ```
 mean_life <- data.frame(group_by(gapminder, continent) %>%  
@@ -90,52 +96,55 @@ ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
       
       
       
-##### Find the mistakes #####
+#**Find the mistakes**
 
-# load modified gapinder dataset
+load modified gapinder dataset
 
+```
 library(ggplot2)
 
 hw_gapminder <- read.csv('C:/Users/Rosen_000/Downloads/hw_gapminder.csv')
 
 str(hw_gapminder)
+```
 
-1) Given:
+####**1) Given:**
 
 ```
 mean_lifeExp <- mean(hw_gapminder$lifeExpe)
 ```
 
-Fixed:
+####**Fixed:**
     
 ```
 mean_lifeExp <- mean(hw_gapminder$lifeExp) 
 ```
 
-2) Given:
+####**2) Given:**
 
 ```
 small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), ('country', 'continent', 'year')]
 ```
 
-Fixed:
+####**Fixed:**
 ```
 small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), c('country', 'continent', 'year')] 
+```
 
-3) Given: 
+####**3) Given:** 
 ```
 mean_gdp <- mean(hw_gapminder$gdpPercap)
 ```
-Fixed:
+####**Fixed:**
 ```    
 mean_gdp <- mean(hw_gapminder$gdpPercap, na.rm = TRUE)
 ```
-Given:
+####**Given:**
 ```
 max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp = max(hw_gapminder$lifeExp))]
 ```
 
-Fixed:
+####**Fixed:**
 ```
 max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp == max(hw_gapminder$lifeExp))] 
 ```
