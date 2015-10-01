@@ -6,7 +6,7 @@ First, load the required libraries. include
 ```{r, message = FALSE}   
 library(ggplot2)
 library(gapminder)
-library(dplyr)  # These usually spit back some messages and warnings, by adding message = FALSE into the above code it suppresses it.
+library(dplyr)  # These usually spit back some messages and warnings, by adding message = FALSE into the above markdown formatting  it suppresses it.
 ```
 
 
