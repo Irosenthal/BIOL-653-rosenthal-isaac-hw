@@ -63,20 +63,10 @@ img {
 
 <div id="plots" class="section level1">
 <h1><strong>Plots</strong></h1>
-<p>First, load the required libraries</p>
+<p>First, load the required libraries. include</p>
 <pre class="r"><code>library(ggplot2)
 library(gapminder)
-library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'
-## 
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
+library(dplyr)  # These usually spit back some messages and warnings, by adding message = FALSE into the above code it suppresses it.</code></pre>
 <div id="plot-1" class="section level4">
 <h4><strong>1) Plot 1</strong></h4>
 <pre class="r"><code>ggplot(data = gapminder, aes(x = gdpPercap, 
@@ -89,6 +79,7 @@ library(dplyr)</code></pre>
 </div>
 <div id="plot-2" class="section level4">
 <h4><strong>2) Plot 2</strong></h4>
+<p>I retyped everything here for practice, but could have saved the previous plot and just added the log transformation right to it.</p>
 <pre class="r"><code>ggplot(data = gapminder, aes(x = gdpPercap, 
                              y = lifeExp, 
                              by = continent)) + 
@@ -191,8 +182,6 @@ str(hw_gapminder)</code></pre>
 <div id="given" class="section level4">
 <h4><strong>1) Given:</strong></h4>
 <pre class="r"><code>mean_lifeExp &lt;- mean(hw_gapminder$lifeExpe)</code></pre>
-<pre><code>## Warning in mean.default(hw_gapminder$lifeExpe): argument is not numeric or
-## logical: returning NA</code></pre>
 </div>
 <div id="fixed" class="section level4">
 <h4><strong>Fixed:</strong></h4>

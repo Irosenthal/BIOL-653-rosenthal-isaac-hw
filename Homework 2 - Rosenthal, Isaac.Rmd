@@ -1,12 +1,12 @@
 
 #**Plots**
 
-First, load the required libraries
+First, load the required libraries. include
 
-```{r}
+```{r, message = FALSE}   
 library(ggplot2)
 library(gapminder)
-library(dplyr)
+library(dplyr)  # These usually spit back some messages and warnings, by adding message = FALSE into the above code it suppresses it.
 ```
 
 
@@ -21,6 +21,9 @@ ggplot(data = gapminder, aes(x = gdpPercap,
 ```
   
 ####**2) Plot 2**
+
+I retyped everything here for practice, but could have saved the previous plot and just added the log transformation right to it.
+
 ```{r}
 ggplot(data = gapminder, aes(x = gdpPercap, 
                              y = lifeExp, 
@@ -165,7 +168,7 @@ max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp = max(hw_gapminde
 ```
 
 ####**Fixed:**
-```{r}
+```{r,}
 max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp == max(hw_gapminder$lifeExp))] # syntax: Needed an extra "=", although it generated a sligthly different result than the one on the website; mine showed levels. 
 max_country
 ```
