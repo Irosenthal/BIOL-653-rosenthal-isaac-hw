@@ -15,7 +15,9 @@ library(dplyr)
 ggplot(data = gapminder, aes(x = gdpPercap, 
                              y = lifeExp, 
                              by = continent)) +  # begin by specifying dataset, axis, and grouping
-  geom_point(aes(color = continent, shape = continent, size = continent)) +  # Now, create a scatter plot by creating a layer. Specify how the variables are displayed on the graph.
+  geom_point(aes(color = continent, 
+                 shape = continent,
+                 size = continent)) +  # Now, create a scatter plot by creating a layer. Specify how the variables are displayed on the graph.
   scale_shape_manual(values = c(19, 17, 15, 3, 7)) +  # Create a matrix to individually change the shape for each continent
   scale_size_manual(values = c(4, 4, 4, 4, 4, 4)) +  # create a matrix to individually change the size of each point
   theme(text = element_text(size = 25))  # change the size of the text. More layers could be added to adjust label positions, add titles, etc.
