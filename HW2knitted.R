@@ -1,0 +1,196 @@
+
+#**Plots**
+
+First, load the required libraries
+
+```{r}
+library(ggplot2)
+library(gapminder)
+library(dplyr)
+```
+
+
+####**1) Plot 1**
+```{r}
+ggplot(data = gapminder, aes(x = gdpPercap, 
+                             y = lifeExp, 
+                             by = continent)) +  # begin by specifying dataset, axis, and grouping
+  geom_point(aes(color = continent, 
+                 shape = continent,
+                 size = continent)) +  # Now, create a scatter plot by creating a layer. Specify how the variables are displayed on the graph.
+  scale_shape_manual(values = c(19, 17, 15, 3, 7)) +  # Create a matrix to individually change the shape for each continent
+  scale_size_manual(values = c(4, 4, 4, 4, 4, 4)) +  # create a matrix to individually change the size of each point
+  theme(text = element_text(size = 25))  # change the size of the text. More layers could be added to adjust label positions, add titles, etc.
+```
+  
+####**2) Plot 2**
+```{r}
+ggplot(data = gapminder, aes(x = gdpPercap, 
+                             y = lifeExp, 
+                             by = continent)) + 
+  geom_point(aes(color = continent, 
+                 shape = continent, 
+                 size = continent)) +
+  scale_shape_manual(values = c(19, 17, 15, 3, 7)) +
+  scale_size_manual(values = c(4 ,4, 4, 4, 4, 4)) +
+  theme(text = element_text(size = 25)) +
+  scale_x_log10()  # Transform the scale of a specified axis with this command. Other transformations can be used instead of log10.
+```  
+  
+####**3) Plot 3**
+```{r}
+ggplot(data = gapminder, aes(x = gdpPercap, 
+                             y = lifeExp, 
+                             by = continent)) + 
+  geom_point(aes(color = continent, 
+                 shape = continent, 
+                 size = continent)) +
+  scale_shape_manual(values = c(19, 17, 15, 3, 7)) +
+  scale_size_manual(values = c(4, 4, 4, 4, 4, 4)) +
+  theme(text = element_text(size = 25)) +
+  scale_x_log10() +
+  geom_smooth(method = lm, aes(group = 1))  # by putting a group in, it's really just specifying not to group by continent. can also just remove by = continent from above.
+``` 
+  
+####**4) Plot 4** 
+```{r}
+ggplot(data = gapminder, aes(x = lifeExp, 
+                             fill = continent)) +
+      geom_density(kernel = 'gaussian', 
+                   aes(),
+                   alpha = .4, 
+                   size = .75) +
+      theme(text = element_text(size = 25)) +
+      facet_wrap(~ year)  # tells it which variable to facet the plots by. Fun to play with, I made a huge plot faceting by country and a useless one faceting by continent.
+```
+
+####**5) Plot 5**
+```{r}
+ggplot(data = gapminder, 
+       aes(x = continent, 
+           y = lifeExp)) +
+      geom_boxplot(aes(color = continent)) +
+      theme(text = element_text(size = 25), 
+            axis.text.x = element_text(angle = -90)) +  # an example of a layer that adjusts the axis text in more elaborate ways than just size. Still just scratching the surface here, but at least this makes it readable.
+      facet_wrap(~ year)
+```      
+####**6) Plot 6**
+```{r}
+ggplot(data = gapminder, aes(x = lifeExp, 
+                             fill = continent)) +
+      geom_density(kernel = 'gaussian', 
+                   aes(), 
+                   alpha = .4,
+                   size = .75) +
+      theme(text = element_text(size = 25)) 
+```
+Nothing to see here, this one was easy.
+
+####**7) Plot 7**
+```{r}
+str(gapminder)  # Check the structure of gapminder before messing around too much with dplyr, just to get your head on straight
+```
+
+```{r}
+filter(gapminder, continent == 'Asia') %>%  # I only want data about Asia so it's safe to filter out everything else
+ggplot(aes(x = lifeExp, 
+           fill = continent)) +
+      geom_density(kernel = 'gaussian', 
+                   aes(), 
+                   alpha = .4,
+                   size = .75) +
+      scale_fill_manual(values = c('green')) +
+      geom_vline(aes(xintercept = mean(lifeExp))) +  # this was a serious pain, I had trouble finding a concise write up on geom_vline. After an hour struggle, I realized I had mispelled xintercept, woops.
+      theme(text = element_text(size = 25))  # did you notice I know how to change the text size?
+```     
+    
+####**8) Plot 8**
+
+First I made a new data frame with only continent and mean life expectancy
+
+```{r}
+mean_life <- data.frame(group_by(gapminder, continent) %>%  
+    summarise(mean = mean(lifeExp)))
+```
+Then I plotted it.
+
+```{r}
+ggplot(data = gapminder, 
+       aes(x = lifeExp, 
+           fill = continent)) +              
+      geom_density(kernel = 'gaussian', 
+                   aes(), 
+                   alpha = .4, 
+                   size = .75) +
+      theme(text = element_text(size = 25)) +
+      geom_vline(data = mean_life, 
+                 aes(xintercept = mean)) +  # be sure to point it to the new data table here. I almost confused myself by having the column named mean, is there a standard protocol about not naming things the same as a function?
+      facet_wrap(~ continent) 
+```      
+      
+      
+      
+#**Find the mistakes**
+
+load the modified gapinder dataset
+
+```{r}
+library(ggplot2)
+
+hw_gapminder <- read.csv('C:/Users/Rosen_000/Downloads/hw_gapminder.csv')
+
+str(hw_gapminder)
+```
+
+####**1) Given:**
+
+```{r}
+mean_lifeExp <- mean(hw_gapminder$lifeExpe)
+```
+
+####**Fixed:**
+    
+```{r}
+mean_lifeExp<- mean(hw_gapminder$lifeExp)  # spelling: removed the extra "e" at the end 
+mean_lifeExp
+```
+
+####**2) Given:**
+
+```{r}
+small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), ('country', 'continent', 'year')]
+```
+
+####**Fixed:**
+```{r}
+small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), c('country', 'continent', 'year')]  # syntax: added a "c" before the list of columns to include
+small_set
+```
+
+####**3) Given:** 
+```{r}
+mean_gdp <- mean(hw_gapminder$gdpPercap)
+```
+####**Fixed:**
+```{r}    
+mean_gdp <- mean(hw_gapminder$gdpPercap, na.rm = TRUE)  # added na.rm = TRUE, allowing to calculate the mean even though there was some missing data or something in there.
+mean_gdp
+```
+####**Given:**
+```{r}
+max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp = max(hw_gapminder$lifeExp))]
+```
+
+####**Fixed:**
+```{r}
+max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp == max(hw_gapminder$lifeExp))] # syntax: Needed an extra "=", although it generated a sligthly different result than the one on the website; mine showed levels. 
+max_country
+```
+I also achieved a similar result (same answer, looks a little different) using dplyr and slice, which was more intuitive to me.
+```{r}
+gapminder %>%
+    slice(which.max(lifeExp)) %>%
+    summarise(country)
+```{r}
+
+ 
