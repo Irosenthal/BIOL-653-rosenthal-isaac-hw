@@ -256,8 +256,7 @@ gapminder <- tbl_df(gapminder)
 gapminder %>%
     filter(year %in% c(1952, 1972, 2002)) %>%
     group_by(continent, year) %>%
-    slice(which.min(pop))
-%>%
+    slice(which.min(pop))%>%
     select(country, year, pop)
     
 
@@ -307,3 +306,101 @@ gapminder %>%
 # 3) which country experiences the sharpest 5 year drop in life expectancy
 # lead
 # lag
+
+
+
+#### subsetting, vectors, and indices ####
+meow <-c(1, 2, 3, 4, 10, 11, 12)
+meow[c(5, 7)]  # or the following if you don't know the length
+meow[c(5, length(meow))]
+
+# function review
+function(arg1, arg2, arg3, ...)
+mean(x, trim = 0, na.rm = FALSE)
+
+# vectors
+Dim       Homogeneous (only 1 type of object, ie all numbers, etc)         Heterogeneous
+1d                       Atomic Vector                                         List
+2d                          Matrix                                          data.frame
+nd                           Array
+
+
+
+# Atomic vectors
+# there are 4 types: logical, ingteger, double (numeric) (have decimals), Character
+
+# lets make some vectors!
+
+# creating a double vector
+dbl_vec <-c(1.2, 1.3, 1.4, 2.5)
+str(dbl_vec)
+typeof(dbl_vec)
+
+# creating an integer vector (numeric, but discrete)
+int_vec <- c(1, 2, 3, 4)# this just produces a double vector
+typeof(int_vec)
+
+int_vec <- c(1L, 2L, 3L, 4L)
+typeof(int_vec)
+
+# creating a logical vector
+log_vec <- c(TRUE, FALSE, TRUE)
+typeof(log_vec)
+log_vec
+sum(log_vec)
+
+
+# creating a character vector
+chr_vec <- c("a", "b", "c")
+chr_vec
+typeof(chr_vec)
+
+
+
+# Coercion
+z <- read.csv(text = "value\n12\n1\n.\n9")
+str(z)
+
+typeof(z)
+typeof(z[[1]])
+
+as.double(z[[1]])  # changes vector type
+
+as.character(z[[1]])
+as.double(as.character(z[[1]])) #this is how you have to make it actual numbers. warning is because . is not a number
+
+# or be clever:
+z <- read.csv(text = "value\n12\n1\n.\n9",  # adding stringsaAsFactors lets you skip a few steps
+              stringsAsFactors = FALSE)
+
+typeof(z[[1]])
+as.double(z[[1]])
+
+
+#  2 dimensional structures
+# matrix
+
+a <- matrix(1:6, ncol = 3, nrow = 2)
+a
+str(a)
+a[, 3]
+
+length(a)
+dim(a)
+nrow(a)
+ncol(a)
+
+
+x <- c('a', 'b', 'c', 'd', 'e', 'f')
+
+a <- matrix(x, ncol = 3, nrow = 2)
+a
+x <- c(x, 1, 2, 3)
+x
+
+
+# Data.frames
+library(gapminder)
+str(gapminder)
+
+
