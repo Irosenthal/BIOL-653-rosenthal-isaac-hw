@@ -213,7 +213,7 @@ filter(gapminder, country == 'Canada')
 # Doesn't work because there is no column b the name of Canada
 select(gapminder, Canada)
 
-(gapminder[, 'country'])
+(gapminder[, 'country'])+
 select(gapminder, country) # selects columns by name
 
 head(select(gapminder, starts_with('C')))
@@ -404,3 +404,42 @@ library(gapminder)
 str(gapminder)
 
 
+rows 10:20
+cols country, lifeExp
+
+gapminder[10:20, c('country', 'lifeExp')]  # need c to tell it how many columns there will be
+
+rows 1, 10, 20, 100
+
+gapminder[c(1:10, 20, 100), ]  # comma with nothing is important, tells it to do all the columns. not specifiying makes it do none and bug out. gapminder is 2 dimensionial 
+
+what are the 3 subsetting operators?
+object[] - multiple values
+object$ - named values
+object [[]] lists (mostly): things inside things. nested objects.
+
+####pepper example####
+# subestting nested objects
+shaker with pepper packet inside, want to get individual pepper grains
+# start from inside out
+shaker
+pepper packet
+grains
+
+pp1 <- c('g1', 'g2', 'g3')
+pp1
+
+pp2 <- pp1
+pp3 <- pp2
+
+shaker <- list(pp1, pp2, pp3)
+shaker
+
+shaker[[1]]  # get first element in the list
+shaker[[1]][2] # don't need to double bracket 2nd one, unless it's another list
+shaker[1][2] # doesnt work - just makes it a shorter list, this is why you need the double brackets first. R doesnt know how to read the 2nd value without knowing its nested. double brackets lets you inside
+
+we want to retrieve pp1
+
+shaker[[1]] # this makes it from a list to a vector
+shaker [[1]][3] # pulls an element from the vector
