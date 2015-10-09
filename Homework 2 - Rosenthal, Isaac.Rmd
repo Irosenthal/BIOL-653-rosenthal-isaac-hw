@@ -86,9 +86,11 @@ ggplot(aes(x = lifeExp,
            fill = continent)) +
       geom_density(kernel = 'gaussian', 
                    aes(), 
-                   alpha = .4) +
+                   alpha = 0.4) +
       scale_fill_manual(values = c('green')) +
       geom_vline(aes(xintercept = mean(lifeExp))) # this was a serious pain, I had trouble finding a concise write up on geom_vline. After an hour struggle, I realized I had mispelled xintercept, woops.
+
+# JD: You don't need to include a blank aes() in geom_density
 ```
       
     
