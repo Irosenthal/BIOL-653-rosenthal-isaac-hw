@@ -299,13 +299,34 @@ gapminder %>%
 # 2) what countries have the best and worst life expectancies in each continent
 
 gapminder %>%
-    select(country, continent, lifeExp) %>%
-    summarise(continent, country, max(lifeExp), min = min(lifeExp))
+    group_by(country) %>%
+    summarise(continent, which.min(lifeExp), which.max(lifeExp))
 
+gapminder %>%
+    group_by(country) %>%
+    slice(max(lifeExp, min(lifeExp)))
 
 # 3) which country experiences the sharpest 5 year drop in life expectancy
 # lead
 # lag
+# have continent country, year, lifeExp
+#      Asia      China    1995   78
+#      Asia      China    2000   83
+
+# group by country so everything going forward is by country
+# then arrange by year to make sure it's in order to calculate differences every 5 years, doesn't change which data you're working with
+# from there, there are several options
+# slice subsets out rows we want
+
+gapminder %>%
+    group_by(country) %>%
+    arrange(year) %>%
+    mutate(diff = lifeExp-lead(lifeExp)) %>%
+    group_by(continent) %>%  #  this allows us to pull out an outlier if we had faceted by continent
+    slice(which.min(diff))
+
+  
+    
 
 
 
@@ -443,3 +464,49 @@ we want to retrieve pp1
 
 shaker[[1]] # this makes it from a list to a vector
 shaker [[1]][3] # pulls an element from the vector
+
+
+
+
+
+##### for loops ####
+
+#  Iteration
+
+foo <- c(7, 10, 11, 52, 55, 83, 10, 9)
+foo[1] # would be 7, foo[8] would be 9
+
+#### for loops ####
+animals <- c("cats", "dogs", "ponies", "koi", "chickens", "moose")
+for (animal in animals){ 
+    len <- nchar(animal)
+    print(len)
+}
+
+for (i in 1:6){
+    len <- nchar(animals[i])
+    print(len)
+}
+
+excersize: calculate the square of the values from 1 -10
+
+for (i in 1:10){
+  sq <- i^2
+   print(sq)
+}
+
+sq <- vector(length = 10)
+for (i in 1:10){
+    sq[i] <- i^2
+}
+print(sq)
+
+calculate the cumulative sum of the values from 1 - 10
+
+c_sum <- 0
+for (i in 1:10){
+    browser()  #  this is a debugging tool
+    c_sum <- c_sum + i
+   
+}    
+print(c_sum)    
