@@ -510,3 +510,40 @@ for (i in 1:10){
    
 }    
 print(c_sum)    
+
+##### for loops excercize ######
+ mat <- matrix(1:100, nrow = 10, ncol = 10)
+for (i in 1:100){
+    print(i)
+}
+
+
+set.seed(1)
+x <- round(runif(min = 10, max = 100, n = 15))
+# creating a vecotor of random numbers using a set seed, from 10 to 100 containing 15 values
+
+
+#3a
+for (i in x){
+    print(paste(i))
+}
+
+#3b
+x <- round(runif(min = 10, max = 100, n = 15))
+
+counts <- vector(length = length(x))
+for (i in x){
+   counts <- paste(i)
+}
+
+#counts 34
+print(counts)
+
+# paste converts it's arguements into a string
+
+
+sqsource <- vector(length = 10)
+for (i in sq){
+    sq <- 2^i
+    print(sq)
+}
