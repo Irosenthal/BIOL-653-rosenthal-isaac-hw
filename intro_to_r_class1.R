@@ -525,25 +525,226 @@ x <- round(runif(min = 10, max = 100, n = 15))
 
 #3a
 for (i in x){
-    print(paste(i))
+    print(paste(i)) # this works and makes sense
 }
 
 #3b
 x <- round(runif(min = 10, max = 100, n = 15))
 
-counts <- vector(length = length(x))
+counts <- vector(length = length(x))   # this doesn't work and doesn't make sense
 for (i in x){
    counts <- paste(i)
 }
 
-#counts 34
-print(counts)
 
 # paste converts it's arguements into a string
 
 
-sqsource <- vector(length = 10)
-for (i in sq){
+
+#4
+
+for (i in 1:10){
     sq <- 2^i
-    print(sq)
+    print(sq)   # this was easy
+}   
+
+#5
+
+matr <- matrix(1:12, nrow = 12, ncol = 12)
+print(matr)    # this is cheating
+
+
+
+for (i in 1:12){
+matr <- i*i
+print(matr)
+}   # but this is broken.
+
+
+#### how to write functions ####
+
+# function(arg1, arg2, arg3)
+# mean(x, trim, na.rm)
+
+#write a function to get the difference between max and min values in a set of values
+x <- (2:200)
+max(x)-min(x)
+
+#functions have name, (typically a verb), arguments (inputs), and body (code)
+
+max_minus_min <-function(x){
+    dif <- max(x)-min(x)
+    return(dif)
 }
+
+max_minus_min(x)
+
+# be aware of defensive programming, don't let your function do silly things
+
+library(gapminder)
+
+max_minus_min(gapminder$lifeExp)
+
+max_minus_min(gapminder$gdp) 
+
+max_minus_min(gapminder$country) #this won't work 
+
+max_minus_min(gapminder[,c('lifeExp', 'gdpPercap', 'pop')]) # this should not give only 1 value, our function is missing something
+
+max_minus_min(c(TRUE, FALSE< TRUE, FALSE, TRUE))  # would we really want this to give us a value? no.
+
+   #we need to add some stuff to the function
+
+max_minus_min <- function(x){
+    stopifnot(is.numeric(x))
+    dif <- max(x)-min(x)
+    return(dif)
+}
+
+# write a function that squares a value
+
+square <- function(x){
+    stopifnot(is.numeric(x))
+    sq <- x^2  
+    return(sq)
+}
+
+Powerup <- function(x, y){
+    stopifnot(is.numeric(x))
+    p <- x^y
+    return(p)
+}
+# If you dont store and return it will only print the last answer. if you wanted x^2, x^3, and x^4, it would only show X^4
+
+# do not overwrite existing functions when you name!
+
+square(8)
+
+
+source("01_load.R") # will run a script from a different file, allows you to keep things neat by keeping functions in a separate script
+
+# write a function that takes a value and you can chose to raise it any power
+
+Powerup <- function(x, y){
+    stopifnot(is.numeric(x))
+    pow <- x^y
+    return(pow)
+}
+
+Powerup(10, 3)
+
+
+
+#### Tidyr ####
+
+install.packages('tidyr')
+
+library(gapminder)
+library(tidyr)
+library(dplyr)
+
+
+# create today's data table
+
+gap <- 
+    filter(gapminder, grepl("^N", country)) %>% 
+    filter(year %in% c(1952, 1977, 2007)) %>% 
+    slice(1:9) %>% 
+    select(-continent, -gdpPercap, -pop) %>% 
+    mutate(lifeExp = round(lifeExp)) %>% 
+    spread(key = year, value = lifeExp)
+
+gap
+
+gap_with_cont <- 
+    filter(gapminder, grepl("^N", country)) %>% 
+    filter(year %in% c(1952, 1977, 2007)) %>% 
+    slice(1:9) %>% 
+    select(-gdpPercap, -pop) %>% 
+    mutate(lifeExp = round(lifeExp)) %>%
+    spread(key = year, value = lifeExp)
+
+gap_with_cont
+
+# timeout, slice example. slice a few specified rows
+slice(.data = gapminder, c(1, 2, 50:55, 650))
+###
+
+
+# tidying data
+
+gap
+
+#we need to gather. something like ggplot couldn't plot this by year
+
+# key is the name of the new column we are creating
+#value are all the values inside the cells that we are pushing into the column
+# last numbers are which columns to use
+
+tidied_gap <- gather(data = gap, key = year, value = lifeExp, 2:4)
+
+tidied_gap
+
+
+# can also just show which columns to ignore
+
+tidied_gap2 <- gather(data = gap, key = year, value = lifeExp, -country)
+
+# what if we have an extra column, in this case continent
+
+gap_with_cont
+
+tidied_gap_with_cont <-
+    gather(data = gap_with_cont, key = year, value = lifeExp, 3:5)
+
+
+
+# lets spread the data
+
+tidied_gap
+
+spread_gap <-
+    spread(data = tidied_gap, key = year, value = lifeExp)
+
+
+# excercise
+
+set.seed(1)
+counts <- 
+    data.frame(site = c(1, 1, 2, 3, 3, 3), taxon = c("A", "B", "A", "A", "B", "C"),
+               abundance = round(runif(n = 6, min = 0, max = 20), 0))
+counts
+
+counts_wide <-
+    spread(data = counts, key = taxon, value = abundance, fill = 0)
+
+counts_wide
+
+counts_long <-
+    gather(data = counts_wide, key = taxon, value = abundance, 2:4)
+    
+counts_long
+
+
+####separate and unite ####
+
+might have scientific names
+
+"Panthera orica"
+"Panthera species 2"
+"Mus musculus"
+
+# unite
+
+united_places <-
+unite(data = tidied_gap_with_cont, col = location_key, country:continent, sep = '_')
+
+separate (data = united_places, col = location_key, into = c('country', 'continent'), sep = '_')
+
+
+
+
+
+
+
+
