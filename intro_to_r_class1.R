@@ -745,6 +745,56 @@ separate (data = united_places, col = location_key, into = c('country', 'contine
 
 
 
+#### morning excercise ####
+
+mammals <- data.frame(site = c(1,1,2,3,3,3), 
+                      taxon = c('Suncus etruscus', 'Sorex cinereus', 
+                                'Myotis nigricans', 'Notiosorex crawfordi', 
+                                'Scuncus etruscus', 'Myotis nigricans'),
+                      density = c(6.2, 5.2, 11.0, 1.2, 9.4, 9.6)
+)
+
+mam_wide <- 
+    spread(data = mammals, key = taxon, value = density, fill = 0)
+
+mam_long <-
+    gather(data = mam_wide, key = taxon, value = density, 2:6)
+
+
+separate(data = mam_long, col = taxon, into = c('genus', 'species'))
+
+
+# add a new column
+set.seed(100)
+mammals$counts <- round(runif(n = 6, min = 0, max = 100))
+mammals
+
+select(.data = mammals, site, taxon, density) %>%
+    spread (key = taxon, value = density, fill = 0)
+
+select(.data = mammals, site, taxon, counts) %>%
+    spread(key = taxon, value = counts, fill = 0)
+
+mammals %>%
+    unite(col = density_counts, density, counts, sep = '__') %>%
+    spread(key = taxon, value = density_counts, fill = '0__0') %>%
+    gather(key = taxon, value = density_counts, -site) %>%
+    separate(col = density_counts, into = c('density', 'counts'), sep = '__')
 
 
 
+#### whale excersise ####
+set.seed(7)
+whale_counts <- data.frame(whale = c('Badger', 'Bamboo', 'Humphrey', 'Kumiko', 
+                                     'Ester', 'Moby Dick'), 
+                           A_2009 = round(runif(n = 6, min = 0, max = 20), 0), 
+                           A_2010 = round(runif(n = 6, min = 0, max = 20), 0),
+                           A_2011 = round(runif(n = 6, min = 0, max = 20), 0),
+                           B_2009 = round(runif(n = 6, min = 0, max = 20), 0),
+                           B_2010 = round(runif(n = 6, min = 0, max = 20), 0),
+                           B_2011 = round(runif(n = 6, min = 0, max = 20), 0)
+)
+
+whale_counts %>%
+    gather(key = site_year, value = sightings, 2:7) %>%
+    separate(col = site_year, into = c('site', 'year'), sep = '_')
