@@ -182,3 +182,16 @@ gapminder %>%
 ```{r}
 
  
+Editor: Aaron Honig;
+Comments:
+
+Hi Isaac,
+
+  I looked over your code last week, but hadn’t typed this up.  I liked your descriptions before each section, and the hashtagged messages.  Those helped the reader follow each line of code, and I should have added those as well.  I liked that you set aside (indented) each part of the code so that it’s clearly visible to the reader; I just never trust R to read it in correctly, and I like just copy and pasting the code without spaces so that I can see how it works, but I can see how that style makes it easier to read. 
+     In plot 2, you don’t need to use by = continent, if you color and shape by continent.  If you type in the code both ways, you can see that it doesn’t matter.  It looks nice in the code to see what you’re doing, but it’s irrelevant.  In plot 3, you can make the code shorter, but you neatly point that out in your hashtag comments. Likewise, in plot 4, kernel and aes are unnecessary; the code runs fine without them.  But maybe they help the reader understand what’s going on. In plot 5, I like what you did, but it’s better if you make the angle positive 45, so that the letters read from bottom left to top right, instead of top to bottom, which makes good use of space, and are still legible.  Also, you could easily put color = continent inside the ggplot aes, instead of the aes belonging to geom boxplot, but it doesn’t particularly matter, and it depends on what you do next (what else you subset on).  Plot 6, same, you don’t need kernel or aes.  Plot 7, it’s nice that you put the mean code inside geom_vline; you could have similarly put the Asia subset inside the ggplot aes to make the code more concise.  It still works the way you have it though. 
+With Plot 8, same thing.  It works, but you could have put the data summariZe inside ggplot to make a single line of code.  Overall, nice job (can you tell I got hammered last year for not making my code more concise?!). 
+	For the mistakes, I like how you put in given; I left that out and just made the corrections.  The other ones, nice simple corrections.  For the last question, you could use “which”.  I happened to use filter, where max_life == max(lifeExp), and then use bracket for spitting out the country, which I thought was a little more concise.  Your code works, so nice job.  Overall, your work is clean, clearly legible and reproducible, and gets the job done.  Well done. 
+
+    — Aaron
+
+
